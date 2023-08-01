@@ -1,0 +1,4 @@
+account:
+  app-id: 0 #BotAppID (开发者ID)
+  app-key: 0 #机器人密钥
+  token: 0 #机器人令牌
