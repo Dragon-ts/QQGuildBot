@@ -1,14 +1,31 @@
 from functions import on_fullmatch, on_startswith
-import var
+import message
+import random
+from datetime import date
 
 
-@on_fullmatch('hello')  # 当消息只是hello时执行下边的函数
-async def hello():
-    await var.send('hello')  # 发送普通信息
-    await var.MessageSegment.reply('hello')  # 发送回复信息
-    await var.MessageSegment.at('hello')  # 发送@信息
+@on_startswith('nya')
+async def func1():
+	await message.send('hello')
 
 
-@on_startswith('good')  # 当消息开头为good时执行下边的函数
-async def good():
-    await var.send(var.Event.channel_id)  # Event内置了一些消息变量可供使用
+@on_fullmatch('/')
+async def func2():
+	with open(r'C:\Users\DELL\Desktop\00000\123456.txt', 'w') as f:
+		f.write('cool')
+
+
+@on_fullmatch('/today')
+async def _():
+	rnd = random.Random()
+	rnd.seed(int(date.today().strftime("%y%m%d")) + int(message.Event.user_id))
+	lucknum = rnd.randint(0, 100)
+	msg = f'您今日的幸运指数是{lucknum}'
+	await message.send(msg)
+
+
+@on_fullmatch('/reply')
+async def reply():
+	# await var.MessageSegment.at(content='123')
+	await message.MessageSegment.at('nyaaaaa', pic=r'.\000.jpg')
+	await message.MessageSegment.at('nyaa', True)
