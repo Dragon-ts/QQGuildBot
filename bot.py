@@ -1,22 +1,25 @@
+import datetime
+
 import botpy
 import yaml
 from functions import on_startswith_options, on_fullmatch_options
 from switch_case_decorator import SwitchCaseDecorator
 from botpy.types.message import Message
-from var import Event
-
+from message import Event
+from botpy import logger
 
 class MyClient(botpy.Client):
     async def on_at_message_create(self, message: Message):
         talk = message.content
         Event.message = message
-        print(message)
+        # print(message)
         Event.channel_id = message.channel_id
         Event.user_id = message.author.id
         Event.message_id = message.id
         Event.client = self
         talk = str(talk).replace(f'<@!{self.robot.id}> ', '').rstrip()  # 去除@bot前缀
-        print(talk)
+        msg = f'[INFO] [{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}] {talk}'
+        print(msg)
         decorator = SwitchCaseDecorator(on_startswith_options, on_fullmatch_options)
         await decorator.match_sequence(talk)
 
